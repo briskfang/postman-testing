@@ -1,0 +1,27 @@
+# name the action
+name: Run Newman Tests
+
+# create a manual trigger
+on:
+    workflow_dispatch:
+
+# define job, platform and steps
+jobs:
+    run-tests:
+        # platform
+        runs-on: ubuntu-latest
+
+        steps:
+            # check out the files from repo into CI running environment
+            - uses: actions/checkout@v3.3.0
+
+            # install Node
+            - name: Install Node
+              uses: actions/setup-node@v3
+  
+            # install newman
+            - name: Install newman
+              run:  npm install newman
+            
+            - name: Run tests
+              run:  newman run collection.json -e env.json
